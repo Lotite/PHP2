@@ -1,0 +1,6 @@
+tamñao array count sizeof
+esta un elemento in_array()
+ordenar 1 ...100 sort
+ordenar 100 ..1 rsort
+valores de una array array_values
+ordenar por clabes ksort kasort
