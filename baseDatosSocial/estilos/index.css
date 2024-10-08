@@ -1,0 +1,50 @@
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 30vh;
+}
+
+
+.contain , .contain > *{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.opcion{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input{
+    margin: 5px;
+    height: 50px;
+    width: 200px;
+    text-indent: 60px;
+}
+
+label{
+    display: flex;
+    align-items: center;
+}
+
+ input[type="checkbox"]{
+    width: 50px;
+    height: 20px;
+
+    margin: 2;
+}
+input[type="submit"] {
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+.material-symbols-outlined{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    scale: 1.5;
+}

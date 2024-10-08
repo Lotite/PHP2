@@ -23,7 +23,7 @@
 </head>
 
 <body>
-   <div class="colum">
+<div class="colum">
     <h1>Iniciar Sesion</h1>
     <?php  if(isset($_SESSION["creado"])){ echo "tu cuenta a sido creada"; unset($_SESSION["creado"]);} ?>
    <form method="POST">
