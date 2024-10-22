@@ -17,7 +17,8 @@
 
 
     if (!$_POST) {
-        imprimirFormulario($adivinanzas);
+        
+        imprimirFormulario($adivinanzas,rand(0, count($adivinanzas) - 1),3);
     } else {
         $num = (int)$_POST["adivinanza"];
         $respTrue = $adivinanzas[$num][1];
@@ -26,7 +27,7 @@
             echo "<h1>Correcto</h1>";
             regresar();
         } else {
-            $intentos = (int)$_POST("intentos");
+            $intentos = (int)$_POST["intentos"];
             $intentos--;
             echo "<h1>Incorectote quedan $intentos </h1>";
             if ($intentos > 0) {
@@ -43,15 +44,14 @@
 
 
 
-    function imprimirFormulario($adivinanzas, $num = -1, $intentos = 3)
+    function imprimirFormulario($adivinanzas, $num , $intentos)
     {
-        if ($num === -1) $num = rand(0, count($adivinanzas) - 1);
         $adivinanza = $adivinanzas[$num];
     ?>
         <h1><?php echo $adivinanza[0] ?></h1>
         <form method="post">
             <input type="hidden" value="<?php echo $num ?>" name="adivinanza" />
-            <input type="hidden" value="<?php echo $intentos ?>" name="intentos" />
+            <input type="hidden" name="intentos" value="<?php echo $intentos ?>"  />
             <input type="text" placeholder="Respuesta" name="respuesta" />
             <button>Enviar</button>
         </form>
