@@ -1,13 +1,16 @@
 <?php
-function validar_email($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
+function validar_email($email)
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL)? true : false ;
 }
 
-function validar_url($url) {
+function validar_url($url)
+{
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
-function validar_ip($ip) {
+function validar_ip($ip)
+{
     return filter_var($ip, FILTER_VALIDATE_IP);
 }
 
@@ -26,42 +29,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sexo = trim(strip_tags($_POST['sexo']));
     $lenguas = isset($_POST['lenguas']) ? implode(", ", $_POST['lenguas']) : '';
 
-    // Verificación de campos obligatorios y formato
-    $errores = [];
-    if (empty($nombre_usuario)) $errores[] = "El nombre de usuario es obligatorio.";
-    if (empty($contraseña)) {
-        $errores[] = "La contraseña es obligatoria.";
-    } elseif (mb_strlen($contraseña) < 6) {
-        $errores[] = "La contraseña debe tener como mínimo seis caracteres.";
-    }
-    if (!empty($edad) && (!filter_var($edad, FILTER_VALIDATE_INT) || $edad < 0 || $edad > 130)) {
-        $errores[] = "La edad debe ser un número entero entre 0 y 130.";
-    }
-    if (empty($email)) {
-        $errores[] = "El email es obligatorio.";
-    } elseif (!validar_email($email)) {
-        $errores[] = "El email no es válido.";
-    }
-    if (!empty($url_personal) && !validar_url($url_personal)) {
-        $errores[] = "La URL de la página personal no es válida.";
-    }
-    if (!empty($ip_equipo) && !validar_ip($ip_equipo)) {
-        $errores[] = "La dirección IP no es válida.";
-    }
-    if (empty($sexo)) $errores[] = "El sexo es obligatorio.";
 
-
-    if (!empty($fecha_nacimiento) && !preg_match('/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/', $fecha_nacimiento)) {
-        $errores[] = "La fecha de nacimiento debe tener el formato dd/mm/aaaa.";
-    }
-
-    if (!empty($errores)) {
-        foreach ($errores as $error) {
-            echo "<p>$error</p>";
+    foreach($_POST as $valor){
+        if(empty($valor)){
+            regresar();
         }
+    }
+    if (!empty($fecha_nacimiento) && !preg_match('/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/', $fecha_nacimiento) or mb_strlen($contraseña) < 6) {
+        regresar();
+    }
+
+
+
+    function regresar()
+    {
+        header('Location: registro.php');
         exit();
     }
-
 
     if (isset($_FILES['curriculo'])) {
         $directorio_subida = 'subidos/';
@@ -95,4 +79,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Lenguas Extranjeras: $lenguas<br>";
     echo "Currículo: Nombre del archivo: $curriculo_nombre, Tamaño: $curriculo_tamaño bytes<br>";
 }
-?>
