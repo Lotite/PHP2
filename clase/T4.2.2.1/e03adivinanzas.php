@@ -9,7 +9,15 @@
 
 <body>
     <?php
+<<<<<<< HEAD
     $adivinanzas = [["Escribe rojo", "rojo"],["Escribe verde", "verde"],["Escribe azul", "azul"]];
+=======
+    $adivinanzas = [];
+    $adivinanza1 = ["Escribe rojo", "rojo"];
+    $adivinanza2 = ["Escribe verde", "verde"];
+    $adivinanzas[] = $adivinanza1;
+    $adivinanzas[] = $adivinanza2;
+>>>>>>> a7d2a3f3f354da6c94519bd3be84fac788617535
 
 
     if (!$_POST) {
