@@ -17,7 +17,6 @@
         crossorigin="anonymous" />
 </head>
 
-<<<<<<< HEAD
 <body class="mx-auto mt-2" style="width: 500px;">
     <div>
     <?php
@@ -60,57 +59,6 @@
 
     ?>
     </div>
-=======
-<body>
-    <div class="mx-auto mt-3" style="width: 500px;">
-        <?php
-
-
-        if (!$_POST) {
-            crearFormulario();
-        } else {
-            $correo = $_POST["correo"];
-            if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-                $usuario = explode("@", $correo)[0];
-                echo "Tu usuario es $correo";
-            } else {
-                ?>
-                <div
-                    class="alert alert-danger"
-                    role="alert"
-                >
-                    <strong>Error format email</strong> Ingresa un correo valido
-                </div>
-                
-                <?php
-                crearFormulario($correo);
-            }
-        }
-
-
-
-
-
-
-        function crearFormulario($correo = "")
-        {
-        ?>
-            <form method="post">
-                <h1>Ingresa tu correo</h1>
-                <input class="form-control" type="text" name="correo" value="<?php echo $correo ?>" placeholder="example@xmail.com">
-                <button class="btn btn-light btn-outline-dark">Enviar</button>
-            </form>
-        <?php
-        }
-
-
-
-
-
-        ?>
-    </div>
-
->>>>>>> a7d2a3f3f354da6c94519bd3be84fac788617535
 </body>
 <script
     src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
