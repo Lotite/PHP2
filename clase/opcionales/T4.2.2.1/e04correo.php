@@ -17,55 +17,48 @@
         crossorigin="anonymous" />
 </head>
 
-<body>
-    <div class="mx-auto mt-3" style="width: 500px;">
-        <?php
-
-
-        if (!$_POST) {
-            crearFormulario();
+<body class="mx-auto mt-2" style="width: 500px;">
+    <div>
+    <?php
+    if (!$_POST) {
+        crearFormulario();
+    } else {
+        $correo = $_POST["correo"];
+        if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            $usuario = explode("@", $correo)[0];
+            echo "<h1>Tu usuario es $usuario";
         } else {
-            $correo = $_POST["correo"];
-            if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-                $usuario = explode("@", $correo)[0];
-                echo "Tu usuario es $correo";
-            } else {
-                ?>
-                <div
-                    class="alert alert-danger"
-                    role="alert"
+    ?>
+            <div
+                class="alert alert-danger"
+                role="alert"
                 >
-                    <strong>Error format email</strong> Ingresa un correo valido
-                </div>
-                
-                <?php
-                crearFormulario($correo);
-            }
-        }
+                <strong>Correo no valido</strong>: Ingresa un correo valido
+            </div>
 
-
-
-
-
-
-        function crearFormulario($correo = "")
-        {
-        ?>
-            <form method="post">
-                <h1>Ingresa tu correo</h1>
-                <input class="form-control" type="text" name="correo" value="<?php echo $correo ?>" placeholder="example@xmail.com">
-                <button class="btn btn-light btn-outline-dark">Enviar</button>
-            </form>
         <?php
+            crearFormulario($correo);
         }
+    }
 
 
 
-
-
+    function crearFormulario($correo = "")
+    {
         ?>
-    </div>
+        <form method="post">
+            <h3>Ingresa un correo</h3>
+            <input type="text" placeholder="example@xmail.com" value="<?php echo $correo ?>" name="correo">
+            <button>Enviar</button>
+        </form>
+    <?php
 
+    }
+
+
+
+    ?>
+    </div>
 </body>
 <script
     src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

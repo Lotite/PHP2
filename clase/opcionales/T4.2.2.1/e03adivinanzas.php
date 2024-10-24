@@ -9,6 +9,8 @@
 
 <body>
     <?php
+
+    $adivinanzas = [["Escribe rojo", "rojo"], ["Escribe verde", "verde"], ["Escribe azul", "azul"]];
     $adivinanzas = [];
     $adivinanza1 = ["Escribe rojo", "rojo"];
     $adivinanza2 = ["Escribe verde", "verde"];
@@ -16,9 +18,10 @@
     $adivinanzas[] = $adivinanza2;
 
 
+
     if (!$_POST) {
-        
-        imprimirFormulario($adivinanzas,rand(0, count($adivinanzas) - 1),6);
+
+        imprimirFormulario($adivinanzas, rand(0, count($adivinanzas) - 1), 6);
     } else {
         $num = (int)$_POST["adivinanza"];
         $respTrue = $adivinanzas[$num][1];
@@ -44,28 +47,28 @@
 
 
 
-    function imprimirFormulario($adivinanzas, $num , $intentos)
+    function imprimirFormulario($adivinanzas, $num, $intentos)
     {
         $adivinanza = $adivinanzas[$num];
     ?>
         <h1><?php echo $adivinanza[0] ?></h1>
         <form method="post">
             <input type="hidden" value="<?php echo $num ?>" name="adivinanza" />
-            <input type="hidden" name="intentos" value="<?php echo $intentos ?>"  />
+            <input type="hidden" name="intentos" value="<?php echo $intentos ?>" />
             <input type="text" placeholder="Respuesta" name="respuesta" />
             <button>Enviar</button>
         </form>
-        <?php
+    <?php
     }
 
 
     function regresar()
     {
     ?>
-    <form method="post">
-        <button>Regresar</button>
-    </form>
-<?php
+        <form method="post">
+            <button>Regresar</button>
+        </form>
+    <?php
     }
 
 
