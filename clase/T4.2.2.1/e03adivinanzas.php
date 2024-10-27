@@ -32,7 +32,7 @@
         } else {
             $intentos = (int)$_POST["intentos"];
             $intentos--;
-            echo "<h1>Incorectote quedan $intentos </h1>";
+            echo "<h1>Incorrecto te quedan $intentos </h1>";
             if ($intentos > 0) {
                 imprimirFormulario($adivinanzas, $num, $intentos);
             } else {
