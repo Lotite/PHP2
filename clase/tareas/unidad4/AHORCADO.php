@@ -1,11 +1,16 @@
 <?php
-$palabras = [];
-$palabras[] = "hola";
-$palabras[] = "adios";
-$palabras[] = "comida";
-$palabras[] = "dormir";
-$palabras[] = "cuscus";
-$palabras[] = "cuba";
+$palabras = [
+    "elefante", "jirafa", "hipopotamo", "rinoceronte", "cocodrilo",
+    "tigre", "leon", "pantera", "guepardo", "leopardo",
+    "zebra", "antilope", "bisonte", "bufalo", "camello",
+    "dromedario", "gacela", "ciervo", "alce", "reno",
+    "caballo", "burro", "mula", "cerdo", "vaca",
+    "oveja", "cabra", "gallina", "pato", "ganso",
+    "pavo", "perro", "gato", "conejo", "huron",
+    "hamster", "raton", "ardilla", "castor", "nutria",
+    "zorro", "lobo", "oso", "mapache", "panda",
+    "koala", "canguro", "wallaby", "dingo", "ornitorrinco"
+];
 
 
 
@@ -13,94 +18,119 @@ $palabras[] = "cuba";
 
 
 
-
-
-if (isset($_POST["estado"])) {
-    if (isset($_POST["enviar"])) {
+function inicializarPagina()
+{
+    if ($_POST) {
         $palabra = $_POST['palabra'];
-        $texto = $_POST['letra'];
-        $letras = $_POST['letras'];
+        $pista = $_POST['pista'];
+        switch ($_POST["action"]) {
+            case "Salir":
+                exit();
+                break;
+            case "Jugar" or "Probar":
+                $letra = isset($_POST['letra']) ? $_POST['letra'] : "";
+                $TemPista = imprimirPista($palabra, $letra, $pista);
+                $vidas = $_POST['vidas'] - ($TemPista == $pista);
+                if(verificarGanado($TemPista)){
+                    if($vidas >= 0){
+                        imprimirFormularioJugar($vidas, $palabra, $TemPista);
+                    }else{
+                        echo "<h1>Has perdido</h1>";
+                    }
+                }else{
+                    echo "<h1>Has ganado</h1>";
+                }
+                break;
+            case "borrar":
+                imprimirFormularioInicial($palabra, $pista);
+                break;
+        }
     } else {
-        $palabra = $palabras[rand(0, count($palabras) - 1)];
-        $letras = "";
+        global $palabras;
+        $palabra =  $palabras[rand(0, count($palabras) - 1)];
+        imprimirFormularioInicial($palabra);
     }
 }
 
 
+function verificarGanado($pista){
+    return strpos($pista,"_") !== false;
+}
 
-function extraer($texto, $palabra)
+
+
+function imprimirPista($palabra, $letra = "", $pista = "",)
 {
     $posiciones = [];
-    $texto = str_split($texto);
-    foreach (str_split($palabra) as $key => $value) {
-        if (in_array($value, $texto)) {
-            if (!isset($posiciones[$value])) {
-                $posiciones[$value] = [];
-            }
-            $posiciones[$value][] = $key;
+    for ($i = 0; $i < strlen($palabra); $i++) {
+        if ($palabra[$i] == $letra) {
+            $posiciones[] = $i;
         }
     }
-    return sustituir($palabra, $posiciones);
+    return sustituir($palabra, $letra, $posiciones, $pista);
 }
 
 
 
 
-function sustituir($palabra, $lista)
+function sustituir($palabra, $letra, $posiciones, $pista = "")
 {
-    $devover = "";
-    for (; strlen($devover) < strlen($palabra); $devover .= "_");
-
-    foreach ($lista as $letra => $posicones) {
-        foreach ($posicones as $posicion) {
-            $devover[$posicion] = $letra;
-        }
+    if (!$pista) {
+        for (; strlen($pista) < strlen($palabra) * 2; $pista .= "_ ");
     }
-
-    return $devover;
+    for ($i = 0; $i < count($posiciones); $i++) {
+        $pista[$posiciones[$i] * 2] = $letra;
+    }
+    return $pista;
 }
 
 
 
 
-echo extraer("ab", "halbaa");
 
 
 
 
-function imprimirFormularioInicial()
+
+function imprimirFormularioInicial($palabra, $pista = null)
 {
+
 ?>
     <h4>Selecciona difcultad</h4>
     <form method="post">
-        <select>
-            <option value="7">Nivel fácil (7 vidas)</option>
-            <option value="6">Nivel intermedio (6 vidas)</option>
-            <option value="5">Nivel difícil (5 vidas)</option>
+        <select name="vidas">
+            <option value="7">Nivel fácil (7 intentos)</option>
+            <option value="6">Nivel intermedio (6 intentos)</option>
+            <option value="5">Nivel difícil (5 intentos)</option>
         </select>
         <br>
-        <input type="submit" name="estado" value="Jugar">
-        <input type="submit" name="salir" value="Salir">
+        <input type="submit" name="action" value="Jugar">
+        <input type="submit" name="action" value="Salir">
+        <input type="hidden" name="palabra" value="<?php echo $palabra; ?>" />
+        <input type="hidden" name="pista" value="<?php echo $pista ?? imprimirPista($palabra); ?>" />
     </form>
 <?php
 }
 
 
-function imprimirFormularioJugar($pista = "_a_", $vida, $palabra, $letras)
+function imprimirFormularioJugar($vida, $palabra, $pista = "")
 {
 ?>
     <form method="post">
-        <p><strong>Pista</strong><span><?php echo $pista; ?></span></p>
+        <p><strong>Pista </strong><span><?php echo $pista; ?></span></p>
         <p>Te quedan <?php echo $vida; ?> vidas</p>
         <span>Introduce una letra: </span> <input type="text" name="letra"> <br>
-        <input type="submit" name="estado" value="enviar">
-        <input type="submit" name="borrar" value="borrar">
+        <input type="submit" name="action" value="Probar">
+        <input type="submit" name="action" value="Borrar">
         <input type="hidden" name="palabra" value="<?php echo $palabra; ?>">
-        <input type="hidden" name="letras" value="<?php echo $letras; ?>">
         <input type="hidden" name="vidas" value="<?php echo $vida; ?>">
+        <input type="hidden" name="pista" value="<?php echo $pista; ?>" />
     </form>
 <?php
 }
+
+
+
 
 
 
@@ -131,7 +161,9 @@ function imprimirFormularioJugar($pista = "_a_", $vida, $palabra, $letras)
 <body>
     <div style="width: 500px;" class="mx-auto mt-4">
         <h1>El AHORCADO</h1>
-        <?php imprimirFormularioInicial() ?>
+        <?php
+        inicializarPagina();
+        ?>
     </div>
 </body>
 
