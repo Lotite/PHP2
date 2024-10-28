@@ -1,23 +1,56 @@
 <?php
 $palabras = [
-    "elefante", "jirafa", "hipopotamo", "rinoceronte", "cocodrilo",
-    "tigre", "leon", "pantera", "guepardo", "leopardo",
-    "zebra", "antilope", "bisonte", "bufalo", "camello",
-    "dromedario", "gacela", "ciervo", "alce", "reno",
-    "caballo", "burro", "mula", "cerdo", "vaca",
-    "oveja", "cabra", "gallina", "pato", "ganso",
-    "pavo", "perro", "gato", "conejo", "huron",
-    "hamster", "raton", "ardilla", "castor", "nutria",
-    "zorro", "lobo", "oso", "mapache", "panda",
-    "koala", "canguro", "wallaby", "dingo", "ornitorrinco"
+    "elefante",
+    "jirafa",
+    "hipopotamo",
+    "rinoceronte",
+    "cocodrilo",
+    "tigre",
+    "leon",
+    "pantera",
+    "guepardo",
+    "leopardo",
+    "zebra",
+    "antilope",
+    "bisonte",
+    "bufalo",
+    "camello",
+    "dromedario",
+    "gacela",
+    "ciervo",
+    "alce",
+    "reno",
+    "caballo",
+    "burro",
+    "mula",
+    "cerdo",
+    "vaca",
+    "oveja",
+    "cabra",
+    "gallina",
+    "pato",
+    "ganso",
+    "pavo",
+    "perro",
+    "gato",
+    "conejo",
+    "huron",
+    "hamster",
+    "raton",
+    "ardilla",
+    "castor",
+    "nutria",
+    "zorro",
+    "lobo",
+    "oso",
+    "mapache",
+    "panda",
+    "koala",
+    "canguro",
+    "wallaby",
+    "dingo",
+    "ornitorrinco"
 ];
-
-
-
-
-
-
-
 function inicializarPagina()
 {
     if ($_POST) {
@@ -31,13 +64,17 @@ function inicializarPagina()
                 $letra = isset($_POST['letra']) ? $_POST['letra'] : "";
                 $TemPista = imprimirPista($palabra, $letra, $pista);
                 $vidas = $_POST['vidas'] - ($TemPista == $pista);
-                if(verificarGanado($TemPista)){
-                    if($vidas >= 0){
+                if ($_POST['action'] == "Jugar") {
+                    setcookie("dificultad", $_POST['vidas'], time() + (3600 * 24 * 7));
+                    setcookie("nombre", $_POST['nombre'], time() + (3600 * 24 * 7));
+                }
+                if (verificarGanado($TemPista)) {
+                    if ($vidas >= 0) {
                         imprimirFormularioJugar($vidas, $palabra, $TemPista);
-                    }else{
+                    } else {
                         echo "<h1>Has perdido</h1>";
                     }
-                }else{
+                } else {
                     echo "<h1>Has ganado</h1>";
                 }
                 break;
@@ -51,14 +88,11 @@ function inicializarPagina()
         imprimirFormularioInicial($palabra);
     }
 }
-
-
-function verificarGanado($pista){
-    return strpos($pista,"_") !== false;
+function verificarGanado($pista)
+{
+    return strpos($pista, "_") !== false;
 }
-
-
-
+///Devueve la pista con las letras acertadas
 function imprimirPista($palabra, $letra = "", $pista = "",)
 {
     $posiciones = [];
@@ -69,10 +103,6 @@ function imprimirPista($palabra, $letra = "", $pista = "",)
     }
     return sustituir($palabra, $letra, $posiciones, $pista);
 }
-
-
-
-
 function sustituir($palabra, $letra, $posiciones, $pista = "")
 {
     if (!$pista) {
@@ -83,25 +113,30 @@ function sustituir($palabra, $letra, $posiciones, $pista = "")
     }
     return $pista;
 }
-
-
-
-
-
-
-
-
-
+// fial de la funcion de la pista
 function imprimirFormularioInicial($palabra, $pista = null)
 {
-
-?>
-    <h4>Selecciona difcultad</h4>
+    $nombre = isset($_COOKIE['nombre']) ? $_COOKIE['nombre'] : "";
+    $dificultad = isset($_COOKIE['dificultad']) ? $_COOKIE['dificultad'] : "";
+?> <h4>Selecciona difcultad</h4>
     <form method="post">
+        <?php
+        if ($nombre !== "") {
+        ?>
+            <h1>Vienvenido <strong><?php echo $nombre; ?></strong></h1>
+            <input type="hidden" name="nombre" value="<?php echo $nombre; ?>">
+        <?php
+        } else { ?>
+            <h4>Ingrese nombre</h4>
+            <input type="text" name="nombre" placeholder="nombre" value="<?php echo $nombre; ?>">
+            <br>
+        <?php
+        }
+        ?>
         <select name="vidas">
-            <option value="7">Nivel fácil (7 intentos)</option>
-            <option value="6">Nivel intermedio (6 intentos)</option>
-            <option value="5">Nivel difícil (5 intentos)</option>
+            <option value="7" <?php if ($dificultad == 7) {echo "selected";} ?>>Nivel fácil (7 intentos)</option>
+            <option value="6" <?php if ($dificultad == 6) {echo "selected";} ?>>Nivel intermedio (6 intentos)</option>
+            <option value="5" <?php if ($dificultad == 5) {echo "selected";} ?>>Nivel difícil (5 intentos)</option>
         </select>
         <br>
         <input type="submit" name="action" value="Jugar">
@@ -111,8 +146,6 @@ function imprimirFormularioInicial($palabra, $pista = null)
     </form>
 <?php
 }
-
-
 function imprimirFormularioJugar($vida, $palabra, $pista = "")
 {
 ?>
@@ -128,27 +161,7 @@ function imprimirFormularioJugar($vida, $palabra, $pista = "")
     </form>
 <?php
 }
-
-
-
-
-
-
-
-
-
 ?>
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 
