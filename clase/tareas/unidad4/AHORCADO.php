@@ -58,8 +58,12 @@ function inicializarPagina()
         $pista = $_POST['pista'];
         switch ($_POST["action"]) {
             case "Salir":
-                exit();
+                echo "<h1 style='color:blue;'>Has salido</h1>";
                 break;
+                case "Borrar":
+                    $vidas = $_POST['vidas'];
+                    imprimirFormularioJugar($vidas, $palabra, $pista);
+                    break;
             case "Jugar" or "Probar":
                 $letra = isset($_POST['letra']) ? $_POST['letra'] : "";
                 $TemPista = imprimirPista($palabra, $letra, $pista);
@@ -72,14 +76,11 @@ function inicializarPagina()
                     if ($vidas >= 0) {
                         imprimirFormularioJugar($vidas, $palabra, $TemPista);
                     } else {
-                        echo "<h1>Has perdido</h1>";
+                        echo "<h1 style='color:red;'>Has perdido</h1>";
                     }
                 } else {
-                    echo "<h1>Has ganado</h1>";
+                    echo "<h1 style='color:green;'>Has ganado</h1>";
                 }
-                break;
-            case "borrar":
-                imprimirFormularioInicial($palabra, $pista);
                 break;
         }
     } else {
@@ -118,12 +119,12 @@ function imprimirFormularioInicial($palabra, $pista = null)
 {
     $nombre = isset($_COOKIE['nombre']) ? $_COOKIE['nombre'] : "";
     $dificultad = isset($_COOKIE['dificultad']) ? $_COOKIE['dificultad'] : "";
-?> <h4>Selecciona difcultad</h4>
+?> <h4>Selecciona dificultad</h4>
     <form method="post">
         <?php
         if ($nombre !== "") {
         ?>
-            <h1>Vienvenido <strong><?php echo $nombre; ?></strong></h1>
+            <h1>Bienvenido <strong><?php echo $nombre; ?></strong></h1>
             <input type="hidden" name="nombre" value="<?php echo $nombre; ?>">
         <?php
         } else { ?>
@@ -150,7 +151,7 @@ function imprimirFormularioJugar($vida, $palabra, $pista = "")
 {
 ?>
     <form method="post">
-        <p><strong>Pista </strong><span><?php echo $pista; ?></span></p>
+        <p><strong>Pista: </strong><span><?php echo $pista; ?></span></p>
         <p>Te quedan <?php echo $vida; ?> vidas</p>
         <span>Introduce una letra: </span> <input type="text" name="letra"> <br>
         <input type="submit" name="action" value="Probar">
@@ -168,11 +169,12 @@ function imprimirFormularioJugar($vida, $palabra, $pista = "")
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La pagina</title>
+    <title>El ahorcado</title>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>
-    <div style="width: 500px;" class="mx-auto mt-4">
+    <div id="contenedor">
         <h1>El AHORCADO</h1>
         <?php
         inicializarPagina();

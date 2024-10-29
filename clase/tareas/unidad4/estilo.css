@@ -1,0 +1,108 @@
+/* Basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #eee;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #contenedor {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+  
+  h4 {
+    color: #3498db;
+    margin: 15px 0;
+    font-size: 18px;
+  }
+  
+  form {
+    margin: 20px 0;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 300px;
+    margin: 10px 0;
+  }
+  
+  input[type="text"]:focus {
+    border-color: #3498db;
+  }
+  
+  select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 300px;
+    margin: 10px 0;
+  }
+  
+  input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #2980b9;
+  }
+  
+  input[type="submit"][value="Salir"] {
+    background-color: #e74c3c;
+  }
+  
+  input[type="submit"][value="Salir"]:hover {
+    background-color: #c0392b;
+  }
+  
+  p {
+    margin: 15px 0;
+    font-size: 16px;
+  }
+  
+  p strong {
+    color: #333;
+  }
+  
+  span {
+    font-size: 18px;
+  }
+  
+  p span {
+    font-family: monospace;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+  }
