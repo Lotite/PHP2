@@ -102,50 +102,50 @@ function imprimirFormularioInicial($palabra, $pista = null)
 {   //Verificaremos ya existen los cookies;
     $nombre = isset($_COOKIE['nombre']) ? $_COOKIE['nombre'] : "";
     $dificultad = isset($_COOKIE['dificultad']) ? $_COOKIE['dificultad'] : "7";
-?> 
-    <form method="post">
-        <?php
+?>
+<form method="post">
+    <?php
         //Si hay cookies se imprimira un saludo
         if ($nombre !== "") {
         ?>
-            <h1>Bienvenido <strong><?php echo $nombre; ?></strong></h1>
-            <input type="hidden" name="nombre" value="<?php echo $nombre; ?>">
-        <?php
+    <h1>Bienvenido <strong><?php echo $nombre; ?></strong></h1>
+    <input type="hidden" name="nombre" value="<?php echo $nombre; ?>">
+    <?php
         //Si no creara un input para ingresar el nombre 
         } else { ?>
-            <h4>Ingrese nombre</h4>
-            <input type="text" name="nombre" placeholder="nombre" value="<?php echo $nombre; ?>">
-            <br>
-        <?php
+    <h4>Ingrese nombre</h4>
+    <input type="text" name="nombre" placeholder="nombre" value="<?php echo $nombre; ?>">
+    <br>
+    <?php
         }
         ?>
-        <h4>Selecciona dificultad</h4>
-        <select name="vidas">
-            <option value="7" <?php if ($dificultad === "7") {echo "selected";} ?>>Nivel fácil (7 intentos)</option>
-            <option value="6" <?php if ($dificultad === "6") {echo "selected";} ?>>Nivel intermedio (6 intentos)</option>
-            <option value="5" <?php if ($dificultad === "5") {echo "selected";} ?>>Nivel difícil (5 intentos)</option>
-        </select>
-        <br>
-        <input type="submit" name="action" value="Jugar">
-        <input type="submit" name="action" value="Salir">
-        <input type="hidden" name="palabra" value="<?php echo $palabra; ?>" />
-        <input type="hidden" name="pista" value="<?php echo $pista ?? imprimirPista($palabra); ?>" />
-    </form>
+    <h4>Selecciona dificultad</h4>
+    <select name="vidas">
+        <option value="7" <?php if ($dificultad === "7") {echo "selected";} ?>>Nivel fácil (7 intentos)</option>
+        <option value="6" <?php if ($dificultad === "6") {echo "selected";} ?>>Nivel intermedio (6 intentos)</option>
+        <option value="5" <?php if ($dificultad === "5") {echo "selected";} ?>>Nivel difícil (5 intentos)</option>
+    </select>
+    <br>
+    <input type="submit" name="action" value="Jugar">
+    <input type="submit" name="action" value="Salir">
+    <input type="hidden" name="palabra" value="<?php echo $palabra; ?>" />
+    <input type="hidden" name="pista" value="<?php echo $pista ?? imprimirPista($palabra); ?>" />
+</form>
 <?php
 }
 function imprimirFormularioJugar($vida, $palabra, $pista = "")
 {
 ?>
-    <form method="post">
-        <p><strong>Pista: </strong><span><?php echo $pista; ?></span></p>
-        <p>Te quedan <?php echo $vida; ?> vidas</p>
-        <span>Introduce una letra: </span> <input type="text" name="letra"> <br>
-        <input type="submit" name="action" value="Probar">
-        <input type="submit" name="action" value="Borrar">
-        <input type="hidden" name="palabra" value="<?php echo $palabra; ?>">
-        <input type="hidden" name="vidas" value="<?php echo $vida; ?>">
-        <input type="hidden" name="pista" value="<?php echo $pista; ?>" />
-    </form>
+<form method="post">
+    <p><strong>Pista: </strong><span><?php echo $pista; ?></span></p>
+    <p>Te quedan <?php echo $vida; ?> vidas</p>
+    <span>Introduce una letra: </span> <input type="text" name="letra"> <br>
+    <input type="submit" name="action" value="Probar">
+    <input type="submit" name="action" value="Borrar">
+    <input type="hidden" name="palabra" value="<?php echo $palabra; ?>">
+    <input type="hidden" name="vidas" value="<?php echo $vida; ?>">
+    <input type="hidden" name="pista" value="<?php echo $pista; ?>" />
+</form>
 <?php
 }
 
