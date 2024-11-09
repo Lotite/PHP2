@@ -19,16 +19,8 @@ function imprimir($localizacion){
 
     }
 }
-
-
-
-
-
-
 ?>
 
-<div class="carpeta">
-    
-</div>
+<h1>Holaa</h1>
 
 
