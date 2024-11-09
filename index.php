@@ -13,6 +13,7 @@ $archivos =  scandir($directorio);
 
 
 
+
 function imprimir($localizacion){
     if(is_dir($localizacion)){
 
