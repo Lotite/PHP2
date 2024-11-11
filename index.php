@@ -21,6 +21,6 @@ function imprimir($localizacion){
 }
 ?>
 
-<h1>Holaa</h1>
+<h1>Holaaa</h1>
 
 
