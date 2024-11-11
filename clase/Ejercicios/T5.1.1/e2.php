@@ -5,7 +5,7 @@ class Personas2{
     private $edad
 
     public function __construct($nombre,$profesion,$edad){
-        
+            
     }
 }
 
