@@ -17,7 +17,8 @@ function inicializarPagima() {
                     $letra = $_POST["letra"];
                     modificarPista($letra, $pista, $palabra, $vidas);
                 }
-                if ($vidas > 0) {
+                case "Borrar":
+                if ($vidas > 0) {    
                     if (verificarVictoria($palabra, $pista))
                         echo '<h1>Felicidades has GANADO!</h1>';
                     else
@@ -26,6 +27,10 @@ function inicializarPagima() {
                     echo "<h1>Perdiste la palabra era $palabra</h1>";
                 }
                 break;
+                case "Salir":
+                echo "<h1>Has salido</h1>";
+                break;
+                
         }
     } else {
         menu(crearPalabra(),existeCookie("nombre"), existeCookie("dificultad"));
