@@ -19,9 +19,7 @@ class cuenta_objs
 $o1 = new cuenta_objs();
 $o2 = new cuenta_objs();
 $o3 = new cuenta_objs();
-//Visualiza el número de objetos existentes 
 unset($o2);
-//Visualiza el número de objetos existentes
 
 echo cuenta_objs::$contador;
 

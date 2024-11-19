@@ -5,7 +5,7 @@
         private $tipoDisco;
         private $marca;
         public function __construct($cantidadGB,$numeroRevoluciones,$tipoDisco = null,$marca = null){
-            $this.$cantidadGB = $cantidadGB;
+            $this->cantidadGB = $cantidadGB;
             $this->numeroRevoluciones = $numeroRevoluciones;
             $this->tipoDisco = $tipoDisco;
             $this->marca = $marca;
@@ -30,6 +30,9 @@
         }
         public function setMarca($marca){
             $this->marca = $marca;
+        }
+        public function __toString(){
+        return "Objt: DiscoDuro";
         }
     }
 ?>

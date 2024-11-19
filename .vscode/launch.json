@@ -2,9 +2,9 @@
     "configurations": [
         {
             "type": "chrome",
-            "name": "http://127.0.0.1:3000/hola.html",
+            "name": "http://127.0.0.1:8000/",
             "request": "launch",
-            "url": "http://127.0.0.1:3000/hola.html"
+            "url": "http://127.0.0.1:8000/"
         }
     ]
 }

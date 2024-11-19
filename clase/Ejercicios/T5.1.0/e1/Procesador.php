@@ -34,4 +34,8 @@ class Procesador
     {
         $this->marca = $marca;
     }
+    public function __toString(){
+        return "Objt: Procesador.";
+    }
+
 }
