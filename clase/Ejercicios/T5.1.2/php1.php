@@ -3,10 +3,12 @@
         private $nombre;
         private $apellidos;
         private $sexo;
-        public function __construct($nombre,$apellidos,$sexo = "h"){
+        private $fechaNacimiento;
+        public function __construct($nombre,$apellidos,$fechaNacimiento,$sexo = "h"){
             $this->nombre = $nombre;
             $this->apellidos = $apellidos;
             $this->sexo = $sexo; 
+            $this->fechaNacimiento = new DateTime($fechaNacimiento);
         }
 
         public function getNom(){
@@ -35,12 +37,18 @@
             $this->sexo = $sexo;
         }
 
+        public function diasVivos(){
+            $hoy = new DateTime();
+            $diferencia = $this->fechaNacimiento->diff($hoy);
+            return $diferencia->y . " años " . $diferencia->m . " meses " . $diferencia->d . " dias " . " Dias totales " . $diferencia->days;
+        }
+
         public function informacionPersona(){
-            return $this->nombre . " " . $this->apellidos . " " . $this->getSexo();
+            return $this->nombre . " " . $this->apellidos . " " . " " . $this->fechaNacimiento->format("d-m-Y") . " " . $this->getSexo();
         }
     }
 
-
-    $p1 = new Persona("lotfi","Bayi");
+    $p1 = new Persona("lotfi","Bayi","28-11-2003");
     echo $p1->informacionPersona();
+    echo $p1->diasVivos();
 ?>
