@@ -1,6 +1,7 @@
 <?php 
 include 'datos.php'; // Incluye el array de cursos
 include 'funciones.php'; // Incluye la función filtrarCursos
+require "Curso.php";
 
 
  $cursos_filtrados = array(); //Array que contrenda los cursos a mostrar.
@@ -8,7 +9,7 @@ include 'funciones.php'; // Incluye la función filtrarCursos
 //Si es la primera vez que se envía el formulario - MOSTRAMOS TODOS LOS CURSOS
 if(!isset($_REQUEST['filtrar'])){
    //COMPLETAR
-   $cursos_filtrados = $cursos;
+   $cursos_filtrados = Curso::leerCursos();
 
 } else {
     //Si se ha pulsado filtrar, obtenemos los valores de los filtros - MOSTRAMOS LOS CURSOS FILTRADOS
@@ -21,8 +22,8 @@ if(!isset($_REQUEST['filtrar'])){
     // echo "<pre>Request";
     // print_r($_REQUEST);
     // echo "</pre>Request";
-    foreach($cursos as $curso){
-        if(filtrarCursos($curso,$_REQUEST["nombre"],$_REQUEST["horas_min"],$_REQUEST["fecha_inicio"])){
+    foreach( Curso::leerCursos() as $curso){
+        if(Curso::filtrarCursos($curso, $_REQUEST['nombre'], $_REQUEST['horas_min'], $_REQUEST['fecha_inicio'])){
             $cursos_filtrados[] = $curso;
         }
     }
@@ -71,7 +72,7 @@ if(!isset($_REQUEST['filtrar'])){
         // Mostrar los resultados filtrados
         if (!empty($cursos_filtrados)) {
             foreach ($cursos_filtrados as $curso) {
-                echo "<li>{$curso['nombre']} - {$curso['horas']} horas - {$curso['fecha_inicio']}</li>";
+                echo "<li>{$curso->getNombre()} - 1curso->getHoras() horas - {$curso->getFechaInicio()}</li>";
             }
         } else {
             echo "<li>No se encontraron cursos con los filtros seleccionados.</li>";
