@@ -7,22 +7,22 @@ class Busqueda
     private $id;
     private $horas;
     private $fecha_inicio;
+
     public function __construct($nombre = null, $horas = null, $fecha_inicio = null)
-    {
-        if (isset($_SESSION["historial"])) {
-            self::$historial = $_SESSION["historial"];
-        }
-        $this->nombre = $nombre;
+    {   
+        self::restaurarHistorial();
         $this->horas = $horas;
         $this->fecha_inicio = $fecha_inicio;
-        self::$historial[] = $this;
         $this->id = self::$numObjs++;
-        $_SESSION["historial"] = self::$historial;
+        $this->nombre = $nombre;
+        $this->guardarHistorial();
     }
-    static public function recuperarBusquedas()
-    {
+
+    static public function recuperarBusquedas(){
+        self::restaurarHistorial();
         return self::$historial;
     }
+
     public function getDatos(){
         $text = "id $this->id, ";
         if ($this->nombre) $text .= "Nombre: $this->nombre, ";
@@ -30,5 +30,19 @@ class Busqueda
         if ($this->fecha_inicio) $text .= "Fecha: $this->fecha_inicio,";
         return $text;
     }
+
+    private function guardarHistorial(){
+        self::$historial[] = $this;
+        $_SESSION["historial"] = array_map('serialize', self::$historial);
+        $_SESSION["numObjs"] = self::$numObjs;
+    }
+
+    private static function restaurarHistorial(){
+        if(isset($_SESSION["historial"])){
+            self::$historial = array_map('unserialize', $_SESSION["historial"]);
+            self::$numObjs = isset($_SESSION["numObjs"]) ? $_SESSION["numObjs"] : 1;
+        }
+    }
 }
 ?>
+

@@ -93,16 +93,19 @@ class Busqueda {
     }
 
     public static function setBusquedas($busquedas){
-        self::$busquedas = $busquedas;
+        self::$busquedas = array_map("unserialize", $busquedas);
     }
 
     
     public static function recuperarBusquedas(){  //getBusquedas()
-
+       // print_r(self::$busquedas);
         return self::$busquedas;
         
     }
-
-
-
+    public static function getContador(){
+        return self::$contador;
+    }
+    public static function setContador($contador){
+        self::$contador = $contador;
+    }
 }

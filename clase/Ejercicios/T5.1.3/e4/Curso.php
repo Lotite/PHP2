@@ -53,9 +53,9 @@ class Curso
     public static function leerCursos()
     {       
         require_once 'datos.php';
-        print_r($cursos);
+        //print_r($cursos);
         $listaCursos = $cursos ?? array(); // Si $cursos no está definido, se utiliza un array vacío      
-         echo "lista de cursos original"; print_r($listaCursos);  
+        // echo "lista de cursos original"; //print_r($listaCursos);  
         $objetosCurso = array();
         
          

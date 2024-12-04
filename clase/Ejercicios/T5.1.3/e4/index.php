@@ -1,4 +1,5 @@
 <?php 
+session_start();
 /*
     1. Iniciar la sesión y recuperar el array de Busquedas guardadas en la sesión (si existe, la primera vez no existirá).
     2. Configurar el array de búsquedas con los datos de la sesión.
@@ -11,17 +12,19 @@
 
 
 include_once 'Curso.php';
-
+include_once 'altaCurso.php';
 //Incluimos la clase Busqueda
 include_once 'Busqueda.php';
 
 //Creamos la sesión
-session_start();
+
+$aBusquedas = [] ;
 if (isset($_SESSION['busquedas'])) {  //Recuperamos las busquedas realizadas anteriormente si existen
    Busqueda::setBusquedas($_SESSION['busquedas']);
    Busqueda::setContador($_SESSION['contador']); //Recuperamos el contador de la sesión.
-
+   $aBusquedas = Busqueda::recuperarBusquedas();
 }
+
 $cursos_filtrados = array(); //Array que contrenda los cursos a mostrar.
 $arrayCursos = Curso::leerCursos(); // Obtenemos todos los cursos
 //Si es la primera vez que se envía el formulario - MOSTRAMOS TODOS LOS CURSOS
@@ -35,7 +38,7 @@ if(!isset($_REQUEST['filtrar'])){
     //Por ejemplo: si el nombre es 'PHP' y la fecha de inicio es '2022-01-01', se seleccionarán todos los cursos que contengan 'PHP' en nombre 
     //y cuya fecha sea mayor que la indicada. Pero en este caso para el filtro horas_min no aplicaremos ningún valor.
     echo "<pre>Request";
-    print_r($_REQUEST);
+    //print_r($_REQUEST);
     echo "</pre>Request";
     $nombre = $_REQUEST['nombre']; 
     $horas_min = $_REQUEST['horas_min'];
@@ -52,15 +55,14 @@ if(!isset($_REQUEST['filtrar'])){
 
     //Creamos a partir de los datos del filtro, un objeto Busqueda
     $busqueda = new Busqueda($nombre, $horas_min, $fecha_inicio);
-    
-    //Recuperamos el array de todos los objetos búsqueda para guardarlos en la sesión  y también para mostrarlas en la vista
     $aBusquedas = Busqueda::recuperarBusquedas();
+    //Recuperamos el array de todos los objetos búsqueda para guardarlos en la sesión  y también para mostrarlas en la vista
+    //print_r($aBusquedas);
     //Guardamos el array de las búsquedas en la sesión para que persista entre peticiones
-    $_SESSION['busquedas'] = $aBusquedas;  
+    $_SESSION['busquedas'] = array_map("serialize",$aBusquedas);  
      $_SESSION['contador']=Busqueda::getContador();
 
 }
-
 
 
 
@@ -95,6 +97,14 @@ if(!isset($_REQUEST['filtrar'])){
         <br>
 
         <input type="submit" name="filtrar" value="Filtrar">
+    </form>
+    <hr>
+    <h1>Alta curso</h1>
+    <form method="post">
+        <label><input type="text" name="nombre" placeholder="Nombre del curso"></label>
+        <label><input type="date" name="fechaInicio" placeholder="Fecha de inicio"></label>
+        <label><input type="number" name="horas" placeholder="Número de horas"></label>
+        <input type="submit" name="alta" value="Crear curso">
     </form>
 
     <hr>

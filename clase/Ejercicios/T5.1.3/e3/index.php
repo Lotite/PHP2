@@ -5,7 +5,7 @@ require_once 'Busqueda.php';
 include 'datos.php'; // Incluye el array de cursos
 include 'funciones.php'; // Incluye la función filtrarCursos
 require "Curso.php";
-
+//if (isset($_SESSION["historial"])) {Busqueda::$historial = $_SESSION["historial"];}
 if(isset($_SESSION["historial"])) print_r($_SESSION["historial"]);
 
 
