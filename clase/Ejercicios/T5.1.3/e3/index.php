@@ -1,9 +1,12 @@
 <?php 
+session_start();
+require_once 'Busqueda.php';
+// Resto de tu código
 include 'datos.php'; // Incluye el array de cursos
 include 'funciones.php'; // Incluye la función filtrarCursos
 require "Curso.php";
-require "Busqueda.php";
-session_start();
+
+if(isset($_SESSION["historial"])) print_r($_SESSION["historial"]);
 
 
 
@@ -26,13 +29,18 @@ if(!isset($_REQUEST['filtrar'])){
     // echo "<pre>Request";
     // print_r($_REQUEST);
     // echo "</pre>Request";
+    $nombre = $_REQUEST['nombre'];
+    $horas_min = $_REQUEST['horas_min'];
+    $fecha_inicio = $_REQUEST['fecha_inicio'];
+    $busqueda = new Busqueda($nombre, $horas_min,$fecha_inicio);
     foreach( Curso::leerCursos() as $curso){
-        if(Curso::filtrarCursos($curso, $_REQUEST['nombre'], $_REQUEST['horas_min'], $_REQUEST['fecha_inicio'])){
+        if(Curso::filtrarCursos($curso, $nombre, $horas_min, $fecha_inicio)){
             $cursos_filtrados[] = $curso;
         }
     }
     //COMPLETAR
-
+    //La función comprueba si UN CURSO se debe mostrar o no.
+   
    //Si hay algún filtro, filtramos los cursos según los parámetros, haciendo uso de la función filtrarCursos y los añadimos en el array $cursos_filtrados.    
    //COMPLETAR 
 }
@@ -83,12 +91,12 @@ if(!isset($_REQUEST['filtrar'])){
         }
         ?>
     </ul>
-
+   
     <h1>Historial</h1>
     <ol>
         <?php
             foreach(Busqueda::recuperarBusquedas() as $busqueda){
-                echo "<li></li>";
+                echo "<li>{$busqueda->getDatos()}</li>";
             }
         ?>
     </ol>
